@@ -1,0 +1,27 @@
+test:
+  service: Disk
+  root: <%= Rails.root.join("tmp/storage") %>
+
+local:
+  service: Disk
+  root: <%= Rails.root.join("storage") %>
+
+# Use rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
+
+aliyun:
+  service: Aliyun
+  access_key_id: <%= Rails.application.credentials.dig(:aliyun, :access_key_id) %>
+  access_key_secret: <%= Rails.application.credentials.dig(:aliyun, :access_key_secret) %>
+  bucket: <%= Rails.application.credentials.dig(:aliyun, :bucket) %>
+  endpoint: <%= Rails.application.credentials.dig(:aliyun, :endpoint) %>
+  mode: "private"
+  # path prefix (optional), default: /
+  # path: "/"
+
+
+# Rails.application.credentials.dig
+# ===> Look into encrypted credentials
+# IN ORDER for RAILS to get the correct info:
+# EITHER 1)  have a /config/master.key file w/ the correct key
+# OR     2)  RAILS_MASTER_KEY=your_key_fjiewjf1092 rails s
+
